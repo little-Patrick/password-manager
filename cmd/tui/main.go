@@ -2,19 +2,22 @@ package main
 
 import (
 	"fmt"
-	"github.com/little-Patrick/password-manager"
+	"github.com/little-Patrick/password-manager/internal/encrypt"
+	"github.com/rivo/tview"
 )
 
 func main() {
-	// Create an Enigma instance, passing in the message and any other parameters.
-	e := encryption.NewEnigma("hello", "", "")
-	
-	// Encrypt the message
+	app := tview.NewApplication()
+
+	e := encrypt.NewLevel1("abc", "")
+
 	encrypted := e.Encrypt()
 	fmt.Println("Encrypted:", encrypted)
 
-	// Decrypt the message
 	decrypted := e.Decrypt()
 	fmt.Println("Decrypted:", decrypted)
-}
 
+	if err := app.Run(); err != nil {
+	    panic(err)
+	}
+}
