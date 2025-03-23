@@ -49,20 +49,24 @@ func (e *Level1) Decrypt() string {
 
 func (e *Level1) passwordShift(isEncrypt bool) string {
 	if isEncrypt {
-		e.keyShift()
-		e.KeyMap()
-		e.PasswordKeyMap()
+		e.finalKey()
 	} else {
-
 	}
 	return ""
 }
 
-func (e *Level1) keyShift() (map[string]int, error) {
-	pinKey, _ := e.keyMap()
+func (e *Level1) finalKey() map[string]int  {
 	passwordKey, _ := e.passwordKeyMap()
+	pinKey, _ := e.keyMap()
 
-	return nil, nil
+	finalKey := map[string]int {
+		"A": pinKey["A"] + passwordKey["A"],
+		"B": pinKey["B"] / passwordKey["B"],
+		"C": pinKey["C"] * passwordKey["C"],
+		"D": pinKey["D"] - passwordKey["D"],
+	}
+
+	return finalKey
 }
 
 func (e *Level1) keyMap() (map[string]int, error) {
@@ -85,6 +89,8 @@ func (e *Level1) keyMap() (map[string]int, error) {
 		}
 		intKeyMap[key] = intValue
 	}
+	runtime.Breakpoint()
+	
 	return intKeyMap, nil
 }
 
