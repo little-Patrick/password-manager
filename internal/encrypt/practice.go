@@ -102,7 +102,7 @@ package encrypt
 // 	return strings.Join(result, "")
 // }
 //
-// // offset calculates the letter shifts based on the final key and whether we're encrypting or decrypting.
+// offset calculates the letter shifts based on the final key and whether we're encrypting or decrypting.
 // func (e *Enigma) offset(final map[string]int, isEncrypt bool) map[string]map[rune]rune {
 // 	letterKey := e.letters()
 // 	offset := make(map[string]map[rune]rune)
