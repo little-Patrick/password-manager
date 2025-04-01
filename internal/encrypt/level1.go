@@ -53,7 +53,16 @@ func (e *Level1) passwordShift(isEncrypt bool) (string, error) {
 
 func (e *Level1) offset() (string, error) {
 	split := e.passwordSplit()
-	
+	key, err := e.keyMap()
+	if err != nil {
+		return "", fmt.Errorf("Error: password: %s, key: %v, err: %v", split, key, err)
+	}
+	runtime.Breakpoint()
+	return "", nil
+}
+
+func (e *Level1) keyShift() map[rune]rune {
+
 }
 
 func (e *Level1) passwordSplit() [][]string {
@@ -94,8 +103,7 @@ func (e *Level1) keyMap() (map[string]int, error) {
 	return intKeyMap, nil
 }
 
-
-func (e *Level1) letters() []rune {
+func (e *Level1) letters() map[rune]rune {
 	var letters []rune
 	for i := 'a'; i <= 'z'; i++ {
 		letters = append(letters, i)
@@ -108,5 +116,12 @@ func (e *Level1) letters() []rune {
 	}
 	specialChars := []rune{'`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '=', '+', '[', '{', ']', '}', '|', ';', ',', '<', '.', '>', '/', '?'}
 	letters = append(letters, specialChars...)
-	return letters
+
+	letterKey := map[rune]rune {}
+
+	for _, letter := range letters {
+		letterKey[letter] = letter
+	}
+
+	return letterKey
 }
