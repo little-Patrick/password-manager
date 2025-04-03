@@ -34,12 +34,17 @@ func (e *Level1) Decrypt() (string, error) {
 }
 
 func (e *Level1) passwordShift(isEncrypt bool) (string, error) {
+	password := ""
 	if isEncrypt {
-		e.encryptOffset()
-	} else {
-		// e.decryptOffset()
+		encrypt, err := e.encryptOffset()
+		password = encrypt
+		if err != nil {
+			return "", fmt.Errorf("Error: key: %s, err: %v", password, err)
+
+		}
 	}
-	return "", nil
+	runtime.Breakpoint()
+	return password, nil
 }
 
 func (e *Level1) encryptOffset() (string, error) {
@@ -50,10 +55,33 @@ func (e *Level1) encryptOffset() (string, error) {
 	password := e.passwordSplit()
 
 	encryptedPassword := ""
-	for i := 0; i < len(password); i += 4 {
-		runtime.Breakpoint()
+	for i := 0; i < len(password); i++  {
+		for j := 0; j < len(password[i]); {
+			if len(password[i]) >= 1 {
+				letterA := finalKey["A"][password[i][j]]
+				encryptedPassword = encryptedPassword + letterA
+				j++
+			}
+			if len(password[i]) >= 2 {
+				letterB := finalKey["B"][password[i][j]]
+				encryptedPassword = encryptedPassword + letterB
+				j++
+			}
+			if len(password[i]) >= 3 {
+				letterC := finalKey["C"][password[i][j]]
+				encryptedPassword = encryptedPassword + letterC
+				j++
+			}
+			if len(password[i]) >= 4 {
+				letterD:= finalKey["D"][password[i][j]] 
+				encryptedPassword = encryptedPassword + letterD
+				j++
+				
+			}
+		}
 	}
-	return "", nil
+	 
+	return encryptedPassword, nil
 }
 
 // func (e *Level1) decryptOffset() (string, error) {
@@ -126,7 +154,6 @@ func (e *Level1) finalKey() (map[string]map[string]string, error) {
 	finalKey["B"] = bMap
 	finalKey["C"] = cMap
 	finalKey["D"] = dMap
-	runtime.Breakpoint()
 
 	return finalKey, nil
 }
