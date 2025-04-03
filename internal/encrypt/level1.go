@@ -35,34 +35,100 @@ func (e *Level1) Decrypt() (string, error) {
 
 func (e *Level1) passwordShift(isEncrypt bool) (string, error) {
 	if isEncrypt {
-		e.offset()
-		// key, err := e.keyMap()
-		// if err != nil {
-		// 	return "", err
-		// }
-
-		// split the password into array each 4 index's
-		// offset first 4 index with A key repeat for rest of keys
-		// 
-		// 
-		
+		e.encryptOffset()
 	} else {
+		// e.decryptOffset()
 	}
 	return "", nil
 }
 
-func (e *Level1) offset() (string, error) {
-	split := e.passwordSplit()
-	key, err := e.keyMap()
+func (e *Level1) encryptOffset() (string, error) {
+	finalKey, err  := e.finalKey()
 	if err != nil {
-		return "", fmt.Errorf("Error: password: %s, key: %v, err: %v", split, key, err)
+		return "", fmt.Errorf("Error: key: %v, err: %v", finalKey, err)
 	}
-	runtime.Breakpoint()
+	password := e.passwordSplit()
+
+	encryptedPassword := ""
+	for i := 0; i < len(password); i += 4 {
+		runtime.Breakpoint()
+	}
 	return "", nil
 }
 
-func (e *Level1) keyShift() map[rune]rune {
+// func (e *Level1) decryptOffset() (string, error) {
+// }
 
+func (e *Level1) finalKey() (map[string]map[string]string, error) {
+	letters := e.letters()
+	keyMap, err := e.keyMap()
+	if err != nil {
+		return nil, fmt.Errorf("Error: key: %v, err: %v", keyMap, err)
+	}
+
+	var aKey []string
+	var bKey []string
+	var cKey []string
+	var dKey []string
+	for i := 0; i < len(letters); i++ {
+		if (i + keyMap["A"]) > len(letters) {
+			index := (i + keyMap["A"] - 1 - len(letters))
+			letter := letters[index]
+			aKey = append(aKey, letter)
+		} else {
+			index := (i + keyMap["A"] - 1)
+			letter := letters[index]
+			aKey = append(aKey, letter)
+		}
+		if (i + keyMap["B"]) > len(letters) {
+			index := (i + keyMap["B"] - 1 - len(letters))
+			letter := letters[index]
+			bKey = append(bKey, letter)
+		} else {
+			index := (i + keyMap["B"] - 1)
+			letter := letters[index]
+			bKey = append(bKey, letter)
+		}
+		if (i + keyMap["C"]) > len(letters) {
+			index := (i + keyMap["C"] - 1 - len(letters))
+			letter := letters[index]
+			cKey = append(cKey, letter)
+		} else {
+			index := (i + keyMap["C"] - 1)
+			letter := letters[index]
+			cKey = append(cKey, letter)
+		}
+		if (i + keyMap["D"]) > len(letters) {
+			index := (i + keyMap["D"] - 1 - len(letters))
+			letter := letters[index]
+			dKey = append(dKey, letter)
+		} else {
+			index := (i + keyMap["D"] - 1)
+			letter := letters[index]
+			dKey = append(dKey, letter)
+		}
+	}
+
+
+	var aMap = make(map[string]string)
+	var bMap = make(map[string]string)
+	var cMap = make(map[string]string)
+	var dMap = make(map[string]string)
+	for i := 0; i < len(letters); i++ {
+		aMap[letters[i]] = aKey[i]
+		bMap[letters[i]] = bKey[i]
+		cMap[letters[i]] = cKey[i]
+		dMap[letters[i]] = dKey[i]
+	}
+
+	finalKey := make(map[string]map[string]string)
+	finalKey["A"] = aMap
+	finalKey["B"] = bMap
+	finalKey["C"] = cMap
+	finalKey["D"] = dMap
+	runtime.Breakpoint()
+
+	return finalKey, nil
 }
 
 func (e *Level1) passwordSplit() [][]string {
@@ -78,7 +144,6 @@ func (e *Level1) passwordSplit() [][]string {
 	    offsetPassword = append(offsetPassword, slice)
 	}
 	return offsetPassword
-
 }
 
 func (e *Level1) keyMap() (map[string]int, error) {
@@ -103,7 +168,7 @@ func (e *Level1) keyMap() (map[string]int, error) {
 	return intKeyMap, nil
 }
 
-func (e *Level1) letters() map[rune]rune {
+func (e *Level1) letters() []string {
 	var letters []rune
 	for i := 'a'; i <= 'z'; i++ {
 		letters = append(letters, i)
@@ -117,10 +182,10 @@ func (e *Level1) letters() map[rune]rune {
 	specialChars := []rune{'`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '=', '+', '[', '{', ']', '}', '|', ';', ',', '<', '.', '>', '/', '?'}
 	letters = append(letters, specialChars...)
 
-	letterKey := map[rune]rune {}
+	var letterKey []string 
 
 	for _, letter := range letters {
-		letterKey[letter] = letter
+		letterKey = append(letterKey, string(letter))
 	}
 
 	return letterKey
