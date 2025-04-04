@@ -68,11 +68,8 @@ go build -o password cmd/tui/main.go
 - [ ] Add decryption support
 - [ ] Add password ID field and search
 - [ ] Add UI option to delete a saved password
+- [ ] Have the download be an executable to a directory in PATH
+- [ ] Allow for mouse click to select fields
 - [ ] Improve encryption levels
   - [ ] 2 additional handrolled encryptions
   - [ ] AES for encrypting json files
-- [ ] Have the download be an executable to a directory in PATH
-- [ ] Allow for mouse click to select fields
-
-
-
