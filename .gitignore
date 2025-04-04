@@ -1,0 +1,5 @@
+# passwords
+data/password-manager.json
+
+# debugging
+_debug_bin
