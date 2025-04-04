@@ -61,7 +61,7 @@ go build -o password cmd/tui/main.go
 - `Enter:` Will move to the next form. If the Encrypt button is selected it will create the password
 - `Ctrl + c:` Exit the program
 
-<h3> 🛠️ TODO / Roadmap</h3>
+<h2> 🛠️ TODO / Roadmap</h2>
   
 - [ ] Add encryption/decryption for local json file
 - [ ] Add password for entering the TUI interface
