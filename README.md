@@ -1,4 +1,4 @@
- <h1 align="center">🔐 password-manager</h1>
+ <h1 align="center">🔐 Password Manager 🔐</h1>
 <p align="center">
   A terminal-based password manager built with Go and <a href="https://github.com/rivo/tview">tview</a>.
 </p>
@@ -11,7 +11,7 @@
 
 ---
 
-<h2 align="center"> ✨ Overview</h2>
+<h2 align="center">✨ Overview ✨</h2>
 
 <p align="center">This TUI was created as a password manager and password creator. It allows you to create multiple passwords from the same root password by just changing the pin making it easier to remember you passwords.</p>
 
