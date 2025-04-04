@@ -1,0 +1,52 @@
+	// for i := 0; i < len(letters); i++ {
+	// 	if (i + keyMap["A"]) >= len(letters) {
+	// 		index := (i + keyMap["A"] - len(letters))
+	// 		letter := letters[index]
+	// 		aKey = append(aKey, letter)
+	// 	} else {
+	// 		index := (i + keyMap["A"] - 1)
+	// 		letter := letters[index]
+	// 		aKey = append(aKey, letter)
+	// 	}
+	// 	if (i + keyMap["B"]) >= len(letters) {
+	// 		index := (i + keyMap["B"] - len(letters))
+	// 		letter := letters[index]
+	// 		bKey = append(bKey, letter)
+	// 	} else {
+	// 		index := (i + keyMap["B"] - 1)
+	// 		letter := letters[index]
+	// 		bKey = append(bKey, letter)
+	// 	}
+	// 	if (i + keyMap["C"]) >= len(letters) {
+	// 		index := (i + keyMap["C"] - len(letters))
+	// 		letter := letters[index]
+	// 		cKey = append(cKey, letter)
+	// 	} else {
+	// 		index := (i + keyMap["C"] - 1)
+	// 		letter := letters[index]
+	// 		cKey = append(cKey, letter)
+	// 	}
+	// 	if (i + keyMap["D"]) >= len(letters) {
+	// 		index := (i + keyMap["D"] - len(letters))
+	// 		letter := letters[index]
+	// 		dKey = append(dKey, letter)
+	// 	} else {
+	// 		index := (i + keyMap["D"] - 1)
+	// 		letter := letters[index]
+	// 		dKey = append(dKey, letter)
+
+	// 	}
+	// }
+		// if indexA >= len(letters) {
+		// 	indexA -= len(letters)
+		// }
+		// if indexB >= len(letters) {
+		// 	indexB -= len(letters)
+		// }
+		// if indexC >= len(letters) {
+		// 	indexC -= len(letters)
+		// }
+		// if indexD >= len(letters) {
+		// 	indexD -= len(letters)
+		// }
+

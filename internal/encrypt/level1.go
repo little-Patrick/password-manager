@@ -1,7 +1,6 @@
 package encrypt
 
 import (
-	"runtime"
 	"fmt"
 	"math/rand"
 	"strconv"
@@ -15,36 +14,27 @@ type Level1 struct {
 }
 
 func NewLevel1(password string, key1 string) *Level1 {
-	if password == "" {
-		// TODO: Handle error properly (e.g., return an error instead)
-		panic("Password cannot be empty")
-	}
+	// if password == "" {
+	// 	// TODO: Handle error properly (e.g., return an error instead)
+	// }
 	if key1 == "" {
-		key1 = fmt.Sprintf("%d", rand.Intn(90000)+1000)
+		key1 = strconv.Itoa(rand.Intn(100000-10000))
 	}
 	return &Level1{password: password, key1: key1}
 }
 
 func (e *Level1) Encrypt() (string, error) {
-	return e.passwordShift(true)
+	encrypt, err := e.encryptOffset()
+	if err != nil {
+		return "", fmt.Errorf("Error: key: %s, err: %v", encrypt, err)
+
+	}
+	 
+	return encrypt, nil
 }
 
 func (e *Level1) Decrypt() (string, error) {
-	return e.passwordShift(false)
-}
-
-func (e *Level1) passwordShift(isEncrypt bool) (string, error) {
-	password := ""
-	if isEncrypt {
-		encrypt, err := e.encryptOffset()
-		password = encrypt
-		if err != nil {
-			return "", fmt.Errorf("Error: key: %s, err: %v", password, err)
-
-		}
-	}
-	runtime.Breakpoint()
-	return password, nil
+	return "", nil
 }
 
 func (e *Level1) encryptOffset() (string, error) {
@@ -80,12 +70,9 @@ func (e *Level1) encryptOffset() (string, error) {
 			}
 		}
 	}
-	 
+	            
 	return encryptedPassword, nil
 }
-
-// func (e *Level1) decryptOffset() (string, error) {
-// }
 
 func (e *Level1) finalKey() (map[string]map[string]string, error) {
 	letters := e.letters()
@@ -98,45 +85,17 @@ func (e *Level1) finalKey() (map[string]map[string]string, error) {
 	var bKey []string
 	var cKey []string
 	var dKey []string
-	for i := 0; i < len(letters); i++ {
-		if (i + keyMap["A"]) > len(letters) {
-			index := (i + keyMap["A"] - 1 - len(letters))
-			letter := letters[index]
-			aKey = append(aKey, letter)
-		} else {
-			index := (i + keyMap["A"] - 1)
-			letter := letters[index]
-			aKey = append(aKey, letter)
-		}
-		if (i + keyMap["B"]) > len(letters) {
-			index := (i + keyMap["B"] - 1 - len(letters))
-			letter := letters[index]
-			bKey = append(bKey, letter)
-		} else {
-			index := (i + keyMap["B"] - 1)
-			letter := letters[index]
-			bKey = append(bKey, letter)
-		}
-		if (i + keyMap["C"]) > len(letters) {
-			index := (i + keyMap["C"] - 1 - len(letters))
-			letter := letters[index]
-			cKey = append(cKey, letter)
-		} else {
-			index := (i + keyMap["C"] - 1)
-			letter := letters[index]
-			cKey = append(cKey, letter)
-		}
-		if (i + keyMap["D"]) > len(letters) {
-			index := (i + keyMap["D"] - 1 - len(letters))
-			letter := letters[index]
-			dKey = append(dKey, letter)
-		} else {
-			index := (i + keyMap["D"] - 1)
-			letter := letters[index]
-			dKey = append(dKey, letter)
-		}
+	for index, _ := range letters {
+		indexA := (index + keyMap["A"] -1) % len(letters)
+		indexB := (index + keyMap["B"] -1) % len(letters)
+		indexC := (index + keyMap["C"] -1) % len(letters)
+		indexD := (index + keyMap["D"] -1) % len(letters)
+		 
+		aKey = append(aKey, letters[indexA])
+		bKey = append(bKey, letters[indexB])
+		cKey = append(cKey, letters[indexC])
+		dKey = append(dKey, letters[indexD])
 	}
-
 
 	var aMap = make(map[string]string)
 	var bMap = make(map[string]string)
@@ -206,7 +165,7 @@ func (e *Level1) letters() []string {
 	for i := '0'; i <= '9'; i++ {
 		letters = append(letters, i)
 	}
-	specialChars := []rune{'`', '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '=', '+', '[', '{', ']', '}', '|', ';', ',', '<', '.', '>', '/', '?'}
+	specialChars := []rune{'!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_', '=', '+', '[', '{', ']', '}', '|', ';', ',', '<', '.', '>', '/', '?'}
 	letters = append(letters, specialChars...)
 
 	var letterKey []string 
