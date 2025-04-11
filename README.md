@@ -27,7 +27,7 @@
 <p>Clone the repo</p>
 
 ```bash
-git clone https://github.com/little-Patrick/password-manager)
+git clone https://github.com/little-Patrick/password-manager
 ```
 <h4>Option 1</h4>
 
