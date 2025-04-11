@@ -52,7 +52,7 @@ go build -o password cmd/tui/main.go
 
 <h2 align="center"> Usage</h2>
 
-<p>In the form on the left hand side input a password and 5 digit pin, then press enter. On the right hand side your original password, new password, and pin will appear!</p>
+<p>In the form on the left hand side input a password and 6 digit pin, then press enter. On the right hand side your original password, new password, and pin will appear!</p>
 
 <h2 align="center"> Keybindings/Navigation</h2>
 
